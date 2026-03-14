@@ -1,0 +1,36 @@
+server:
+  port: 8080 # Example port for the API Gateway
+
+spring:
+  application:
+    name: api-gateway # Standard practice is lowercase with hyphens
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: movie-service-route
+              uri: lb://movie-service
+              predicates:
+                - Path=/movies/**
+            - id: booking-service-route # Added back for your assessment requirements
+              uri: lb://booking-service
+              predicates:
+                - Path=/bookings/**
+
+eureka:
+  client:
+    service-url: # Standardized to kebab-case
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info 
+  tracing:
+    sampling:
+      probability: 1.0 # Trace 100% of requests to Zipkin
+    export:
+      zipkin:
+        endpoint: http://localhost:9411/api/v2/spans

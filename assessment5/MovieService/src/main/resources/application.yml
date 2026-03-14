@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: movie-service
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    # This is the FIX for Rohan.mshome.net
+    prefer-ip-address: true

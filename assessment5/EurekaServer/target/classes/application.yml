@@ -1,0 +1,17 @@
+server:
+  port: 8761 # The standard port for the Eureka Dashboard
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # Since this is the registry itself, it should not register with Eureka
+    register-with-eureka: false
+    # It also does not need to fetch the registry from other nodes
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
